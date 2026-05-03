@@ -40,9 +40,12 @@ class HelloAgentsLLM:
             print("大语言模型响应成功:")
             collected_content = []
             for chunk in response:
-                content = chunk.choices[0].delta.content or ""
-                print(content, end="", flush=True)
-                collected_content.append(content)
+                if chunk.choices and len(chunk.choices) > 0:
+                    delta = chunk.choices[0].delta
+                    if delta and delta.content:
+                        content = delta.content
+                        print(content, end="", flush=True)
+                        collected_content.append(content)
             print()
             return "".join(collected_content)
 

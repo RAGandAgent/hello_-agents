@@ -1,5 +1,5 @@
 import ast
-from .LLM import HelloAgentsLLM
+from LLM import HelloAgentsLLM
 
 
 PLANNER_PROMPT_TEMPLATE = """
@@ -41,6 +41,8 @@ class Planner:
         print(f"计划已生成:\n{response}")
 
         try:
+            if not response or response.strip() == "":
+                return []
             plan_str = response.strip("```python").strip("```").strip()
             plan = ast.literal_eval(plan_str)
             return plan if isinstance(plan, list) else [] 
@@ -97,3 +99,9 @@ class PlanAndSolve:
         final_answer = self.executor.execute(question, plan)
         print(f"\n 任务完成 \n 最终答案: {final_answer}")
 
+
+
+if __name__ == "__main__":
+    llm = HelloAgentsLLM()
+    plan_and_solve = PlanAndSolve(llm)
+    plan_and_solve.run("一个水果店周一卖出了15个苹果。周二卖出的苹果数量是周一的两倍。周三卖出的数量比周二少了5个。请问这三天总共卖出了多少个苹果？")
