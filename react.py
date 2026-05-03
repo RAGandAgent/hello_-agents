@@ -56,6 +56,37 @@ class RrActAgent:
             if not response:
                 print("智能体回复为空，无法继续。")
                 break
+            thought, action = self._parse_output(response)
+            if thought:
+                print(f"Thought: {thought}")
+            if not action:
+                print("Action 为空，无法继续。")
+                break
+
+            if action.startswith("Finish"):
+                final_answer = re.match(r"Finish\[(.*)\]", action).group(1)
+                print(f"Final Answer: {final_answer}")
+                return final_answer
+            
+            tool_name, tool_input = self._parse_action(action)
+            if not tool_name or not tool_input:
+                continue
+            
+            print(f"Action: {tool_name} [{tool_input}]")
+            tool_function = self.tool_executor.getTool(tool_name)
+            if not tool_function:
+                observation = print(f"工具 {tool_name} 不存在。")
+            else:
+                observation = tool_function(tool_input)
+                print(f"工具 {tool_name} 输出: {observation}")
+
+                self.history.append(f"Action {tool_name} [{tool_input}]")
+                self.history.append(f"Observation: {observation}")
+        self.history.append(f"action: {action}")
+        self.history.append(f"observation: {observation}")
+        return None
+
+
     def _parse_output(self, output: str):
         """解析LLM的输出，提取Thought和Action。"""
         thought_matach = re.search(r"Thought:\s*(.+)", output, re.DOTALL)
