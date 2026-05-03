@@ -78,12 +78,9 @@ class RrActAgent:
                 observation = print(f"工具 {tool_name} 不存在。")
             else:
                 observation = tool_function(tool_input)
-                print(f"工具 {tool_name} 输出: {observation}")
-
-                self.history.append(f"Action {tool_name} [{tool_input}]")
-                self.history.append(f"Observation: {observation}")
-        self.history.append(f"action: {action}")
-        self.history.append(f"observation: {observation}")
+                observation = print(f"工具 {tool_name} 输出: {observation}")
+            self.history.append(f"action: {action}")
+            self.history.append(f"observation: {observation}")
         return None
 
 
