@@ -24,7 +24,7 @@ History: {history}
 
 
 class RrActAgent:
-    def __init__(self, LLM: HelloAgentsLLM, tool_executor: ToolExecutor, max_steps: int = 10) -> None:
+    def __init__(self, LLM: HelloAgentsLLM, tool_executor: ToolExecutor, max_steps: int = 5) -> None:
         self.LLM = LLM
         self.tool_executor = tool_executor
         self.max_steps = max_steps
