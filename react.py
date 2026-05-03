@@ -75,10 +75,10 @@ class RrActAgent:
             print(f"Action: {tool_name} [{tool_input}]")
             tool_function = self.tool_executor.getTool(tool_name)
             if not tool_function:
-                observation = print(f"工具 {tool_name} 不存在。")
+                observation =  f"错误:未找到名为 '{tool_name}' 的工具。"
             else:
                 observation = tool_function(tool_input)
-                observation = print(f"工具 {tool_name} 输出: {observation}")
+            print(f"Observation: {observation}")
             self.history.append(f"action: {action}")
             self.history.append(f"observation: {observation}")
         return None
