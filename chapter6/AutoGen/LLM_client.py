@@ -1,6 +1,5 @@
 import os
 import asyncio
-from typing import List, Dict, Any
 from dotenv import load_dotenv
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from autogen_agentchat.agents import AssistantAgent, UserProxyAgent
