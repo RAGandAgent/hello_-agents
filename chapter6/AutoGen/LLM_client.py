@@ -37,8 +37,8 @@ def create_product_manager(model_client):
 5. 验收标准定义
 请简洁明了地回应，并在分析完成后说"请工程师开始实现"。"""
     return AssistantAgent(
-        name="产品经理",
-        llm_config={"model_client": model_client},
+        name="ProductManager",
+        model_client=model_client,
         system_message=system_message,
     )
 
@@ -59,8 +59,8 @@ def create_engineer(model_client):
 5. 考虑边界情况和异常处理
 请提供完整的可运行代码，并在完成后说"请代码审查员检查"。"""
     return AssistantAgent(
-        name="工程师",
-        llm_config={"model_client": model_client},
+        name="Engineer",
+        model_client=model_client,
         system_message=system_message,
     )   
 
@@ -163,8 +163,8 @@ if __name__ == "__main__":
         # 运行异步协作流程
         result = asyncio.run(run_software_development_team())
         
-        print(f"\n📋 协作结果摘要：")
-        print(f"- 参与智能体数量：4个")
+        print("\n📋 协作结果摘要：")
+        print("- 参与智能体数量：4个")
         print(f"- 任务完成状态：{'成功' if result else '需要进一步处理'}")
         
     except ValueError as e:
